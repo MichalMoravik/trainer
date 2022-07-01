@@ -4,14 +4,12 @@ from trainer import Trainer
 
 
 class TrainerTest(unittest.TestCase):
-    def test_first_start(self):
-       trainer = Trainer()
+    def test_adding_to_metrics(self):
+        trainer = Trainer()
+        with trainer('r'):
+            pass
 
-       with trainer:
-           pass
-
-       print(trainer.first_start)
-       self.assertIsNotNone(trainer.first_start)
+        self.assertIsNotNone(trainer.metrics['r'])
 
 
 if __name__ == '__main__':
