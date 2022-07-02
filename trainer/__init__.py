@@ -5,7 +5,7 @@ class Trainer:
     def __init__(self):
       self.start = 0
       self.first_start = None
-      self.current_measurement_name = None
+      self.current_metric_name = None
       self.metrics = {}
 
     def __enter__(self):
@@ -15,19 +15,19 @@ class Trainer:
             self.first_start = self.start
 
     def __exit__(self, exc_type, exc_value, traceback):
-        if not self.current_measurement_name:
+        if not self.current_metric_name:
             raise ValueError('Name of the current measurement was not specified')
-        self._append_metric(self.current_measurement_name, self.start, time.time())
+        self._append_metric(self.current_metric_name, self.start, time.time())
 
     def __call__(self, name: str) -> 'Trainer':
-        self.current_measurement_name = name
+        self.current_metric_name = name
         return self
 
-    def add_total(self, name='total_execution') -> 'Trainer':
+    def add_total(self, name='total_execution'):
         if not self.first_start:
-            raise ValueError('')
+            raise ValueError('Measuring was not started.'
+                'Add at least one metric or call start_measuring()')
         self._append_metric(name, self.first_start, time.time())
-        return self
 
     def _append_metric(self, name: str, start: float, end: float):
         self.metrics[name] = {
