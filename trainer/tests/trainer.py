@@ -50,6 +50,13 @@ class TrainerTest(unittest.TestCase):
         with self.assertRaises(Exception):
             self.trainer.add_total()
 
+    def test_round(self):
+        m = self.trainer.round(2).start_measuring().add_total().matrics
+
+        for v in m[0].values():
+            decimals_number = len(str(v)[str(v).find('.')+1:])
+            self.assertEqual(2, decimals_number)
+
 
 if __name__ == '__main__':
     unittest.main()
