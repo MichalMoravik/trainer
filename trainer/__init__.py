@@ -3,36 +3,35 @@ import time
 
 class Trainer:
     def __init__(self):
-      self.last_start = 0
-      self.last_end = 0
-      self.first_start = 0
+      self.start = 0
+      self.first_start = None
       self.current_measurement_name = None
       self.metrics = {}
 
     def __enter__(self):
-        self.last_start = time.time()
+        self.start = time.time()
 
         if self.first_start == 0:
-            self.first_start = self.last_start
+            self.first_start = self.start
 
     def __exit__(self, exc_type, exc_value, traceback):
-        self.last_end = time.time()
+        if not self.current_measurement_name:
+            raise ValueError('Name of the current measurement was not specified')
+        self._append_metric(self.current_measurement_name, self.start, time.time())
 
-        self.metrics[self.current_measurement_name] = {
-            'start': self.last_start,
-            'end': self.last_end,
-            'interval': self.last_end - self.last_start
-        }
-
-    def __call__(self, name):
+    def __call__(self, name: str) -> 'Trainer':
         self.current_measurement_name = name
         return self
 
-    def add_total(self, name='total_execution'):
-        self.last_end = time.time()
+    def add_total(self, name='total_execution') -> 'Trainer':
+        if not self.first_start:
+            raise ValueError('')
+        self._append_metric(name, self.first_start, time.time())
+        return self
 
+    def _append_metric(self, name: str, start: float, end: float):
         self.metrics[name] = {
-                'start': self.first_start,
-                'end': self.last_end,
-                'interval': self.last_end - self.first_start
+            'start': start,
+            'end': end,
+            'interval': end - start,
         }
