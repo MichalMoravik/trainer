@@ -26,6 +26,11 @@ class TrainerTest(unittest.TestCase):
             pass
         self.assertIsNotNone(self.trainer.metrics.get('t'))
 
+    def test_ctx_without_name_fail(self):
+        with self.assertRaises(Exception):
+            with self.trainer:
+                pass
+
     def test_add_total_when_metric(self):
         with self.trainer('n'):
             pass
