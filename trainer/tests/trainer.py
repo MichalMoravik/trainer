@@ -4,20 +4,19 @@ from trainer import Trainer
 
 
 class TrainerTest(unittest.TestCase):
-    def test_adding_to_metrics(self):
-        trainer = Trainer()
+    def setUp(self):
+        self.trainer = Trainer()
 
-        with trainer('r'):
+    def test_adding_to_metrics(self):
+        with self.trainer('r'):
             pass
 
-        self.assertIsNotNone(trainer.metrics.get('r'))
+        self.assertIsNotNone(self.trainer.metrics.get('r'))
 
     def test_add_total(self):
-        trainer = Trainer()
+        self.trainer.add_total()
 
-        trainer.add_total()
-
-        self.assertIsNotNone(trainer.metrics.get('total_execution'))
+        self.assertIsNotNone(self.trainer.metrics.get('total_execution'))
 
 
 if __name__ == '__main__':
