@@ -24,8 +24,9 @@ class Trainer:
         self.current_metric_name = str(name)
         return self
 
-    def start_measuring(self):
+    def start_measuring(self) -> 'Trainer' :
        self.first_start = time.time()
+       return self
 
     def add_total(self, name='total_execution'):
         if not self.first_start:
