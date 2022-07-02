@@ -21,6 +21,11 @@ class TrainerTest(unittest.TestCase):
 
         self.assertEqual(self.trainer.metrics, expected)
 
+    def test_ctx_appends(self):
+        with self.trainer('t'):
+            pass
+        self.assertIsNotNone(self.trainer.metrics.get('t'))
+
     def test_add_total_when_metric(self):
         with self.trainer('n'):
             pass
@@ -35,6 +40,10 @@ class TrainerTest(unittest.TestCase):
         self.trainer.add_total()
 
         self.assertIsNotNone(self.trainer.metrics.get('total_execution'))
+
+    def test_add_total_fail(self):
+        with self.assertRaises(Exception):
+            self.trainer.add_total()
 
 
 if __name__ == '__main__':

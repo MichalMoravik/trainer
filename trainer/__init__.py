@@ -23,6 +23,9 @@ class Trainer:
         self.current_metric_name = name
         return self
 
+    def start_measuring(self):
+       self.first_start = time.time()
+
     def add_total(self, name='total_execution'):
         if not self.first_start:
             raise ValueError('Measuring was not started.'
