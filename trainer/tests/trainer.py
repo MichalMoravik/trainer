@@ -35,16 +35,16 @@ class TrainerTest(unittest.TestCase):
         with self.trainer('n'):
             pass
 
-        self.trainer.add_total()
-
-        self.assertIsNotNone(self.trainer.metrics.get('total_execution'))
+        self.assertIsNotNone(
+            self.trainer.add_total().metrics.get('total_execution')
+        )
 
     def test_add_total_when_started(self):
         self.trainer.start_measuring()
 
-        self.trainer.add_total()
-
-        self.assertIsNotNone(self.trainer.metrics.get('total_execution'))
+        self.assertIsNotNone(
+            self.trainer.add_total().metrics.get('total_execution')
+        )
 
     def test_add_total_fail(self):
         with self.assertRaises(Exception):
