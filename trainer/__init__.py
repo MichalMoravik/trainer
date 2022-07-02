@@ -3,7 +3,7 @@ import time
 
 class Trainer:
     def __init__(self):
-      self.start = None
+      self.metric_start = None
       self.first_start = None
       self.current_metric_name = None
       self.metrics = {}
@@ -12,13 +12,13 @@ class Trainer:
         if not self.current_metric_name:
             raise ValueError('Metric name was not specified')
 
-        self.start = time.time()
+        self.metric_start = time.time()
 
         if not self.first_start:
-            self.first_start = self.start
+            self.first_start = self.metric_start
 
     def __exit__(self, exc_type, exc_value, traceback):
-        self._append_metric(self.current_metric_name, self.start, time.time())
+        self._append_metric(self.current_metric_name, self.metric_start, time.time())
 
     def __call__(self, name: str) -> 'Trainer':
         self.current_metric_name = str(name)
