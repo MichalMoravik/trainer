@@ -3,7 +3,7 @@ import time
 
 class Trainer:
     def __init__(self):
-      self.start = 0
+      self.start = None
       self.first_start = None
       self.current_metric_name = None
       self.metrics = {}
@@ -11,7 +11,7 @@ class Trainer:
     def __enter__(self):
         self.start = time.time()
 
-        if self.first_start == 0:
+        if not self.first_start:
             self.first_start = self.start
 
     def __exit__(self, exc_type, exc_value, traceback):
