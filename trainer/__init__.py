@@ -57,3 +57,4 @@ class Trainer:
             'end': self._round(end),
             'interval': self._round(self._round(end) - self._round(start)),
         }
+
