@@ -1,5 +1,8 @@
 import unittest
 import time
+import math
+
+from parameterized import parameterized
 
 from trainer import Trainer
 
@@ -30,6 +33,9 @@ class TrainerTest(unittest.TestCase):
         with self.assertRaises(Exception):
             with self.trainer:
                 pass
+        with self.assertRaises(Exception):
+            with self.trainer(''):
+                pass
 
     def test_add_total_when_metric(self):
         with self.trainer('n'):
@@ -50,12 +56,42 @@ class TrainerTest(unittest.TestCase):
         with self.assertRaises(Exception):
             self.trainer.add_total()
 
-    def test_round(self):
-        m = self.trainer.round(2).start_measuring().add_total().metrics
+    @parameterized.expand([
+        (1, ),
+        (2, ),
+    ])
+    def test_round(self, no):
+        self.trainer.round(no).start_measuring()
+        time.sleep(math.pi / 10)
+        m = self.trainer.add_total().metrics
 
         for v in m['total_execution'].values():
             decimals_number = len(str(v)[str(v).find('.')+1:])
-            self.assertEqual(2, decimals_number)
+            self.assertLessEqual(decimals_number, no)
+
+    @parameterized.expand([
+        (-2, ),
+        (-1, ),
+    ])
+    def test_round_fail(self, no):
+        with self.assertRaises(Exception):
+            self.trainer.round(no)
+
+    def test_round_empty(self):
+        self.trainer.round().start_measuring()
+        time.sleep(math.pi / 10)
+        m = self.trainer.add_total().metrics
+
+        for v in m['total_execution'].values():
+            self.assertTrue(type(v) is int)
+
+    def test_round_zero(self):
+        self.trainer.round(0).start_measuring()
+        time.sleep(math.pi / 10)
+        m = self.trainer.add_total().metrics
+
+        for v in m['total_execution'].values():
+            self.assertTrue(type(v) is int)
 
 
 if __name__ == '__main__':
