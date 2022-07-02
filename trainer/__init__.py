@@ -6,7 +6,7 @@ class Trainer:
       self._metric_start = None
       self._first_start = None
       self._current_metric_name = None
-      self._dec_no = None
+      self._round = lambda i: i
       self.metrics = {}
 
     def __enter__(self):
@@ -20,33 +20,36 @@ class Trainer:
 
     def __exit__(self, exc_type, exc_value, traceback):
         self._append_metric(
-            self._current_metric_name, self._metric_start, time.time()
+            str(self._current_metric_name), self._metric_start, time.time()
         )
 
     def __call__(self, name: str) -> 'Trainer':
-        self._current_metric_name = str(name)
+        self._current_metric_name = name
         return self
 
     def start_measuring(self) -> 'Trainer':
        self._first_start = time.time()
        return self
 
-    def round(self, no) -> 'Trainer':
-        self._dec_no = no
+    def round(self, no=None) -> 'Trainer':
+        if no == 0 or no is None:
+            self._round = lambda n: round(n)
+            return self
+        if int(no) < 0:
+            raise ValueError('Round argument must be unsigned integer or absent')
+        self._round = lambda n: round(n, int(no))
         return self
 
     def add_total(self, name='total_execution') -> 'Trainer':
         if not self._first_start:
-            raise ValueError('Measuring was not started.'
+            raise ValueError('Measuring was not started. '
                 'Add at least one metric or call start_measuring()')
         self._append_metric(str(name), self._first_start, time.time())
         return self
 
     def _append_metric(self, name: str, start: float, end: float):
-        r = lambda n: round(n, self._dec_no) if self._dec_no else n
-
         self.metrics[name] = {
-            'start': r(start),
-            'end': r(end),
-            'interval': r(end) - r(start),
+            'start': self._round(start),
+            'end': self._round(end),
+            'interval': self._round(self._round(end) - self._round(start)),
         }
