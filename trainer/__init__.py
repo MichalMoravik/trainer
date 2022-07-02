@@ -44,8 +44,10 @@ class Trainer:
 
     def add_total(self, name='total_execution') -> 'Trainer':
         if not self._first_start:
-            raise ValueError('Measuring was not started. '
-                'Add at least one metric or call start_measuring()')
+            raise ValueError(
+                'Cannot add total as measurement has not been started. '
+                'Add at least one metric or call start_measuring()'
+            )
         self._append_metric(str(name), self._first_start, time.time())
         return self
 
