@@ -24,6 +24,8 @@ class Trainer:
         )
 
     def __call__(self, name: str) -> 'Trainer':
+        if str(name) in self.metrics:
+            raise ValueError('Metric with this name already exists')
         self._current_metric_name = name
         return self
 
