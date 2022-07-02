@@ -51,9 +51,9 @@ class TrainerTest(unittest.TestCase):
             self.trainer.add_total()
 
     def test_round(self):
-        m = self.trainer.round(2).start_measuring().add_total().matrics
+        m = self.trainer.round(2).start_measuring().add_total().metrics
 
-        for v in m[0].values():
+        for v in m['total_execution'].values():
             decimals_number = len(str(v)[str(v).find('.')+1:])
             self.assertEqual(2, decimals_number)
 
