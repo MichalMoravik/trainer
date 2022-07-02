@@ -26,6 +26,14 @@ class TrainerTest(unittest.TestCase):
         self.assertIsNotNone(self.trainer.metrics.get('m'))
         self.assertIsNotNone(self.trainer.metrics.get('t'))
 
+    def test_ctx_should_fail_to_append_duplicated_name(self):
+        with self.trainer('t'):
+            pass
+
+        with self.assertRaises(Exception):
+            with self.trainer('t'):
+                pass
+
     def test_ctx_without_name_fail(self):
         with self.assertRaises(Exception):
             with self.trainer:
