@@ -1,2 +1,2 @@
 parameterized==0.8.1
-trainer==0.1.0
+trainer-py==0.1.0
