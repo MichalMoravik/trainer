@@ -27,7 +27,7 @@ print(m)
 }
 ```
 
-> for more examples, see folder "examples"
+> for more examples, see folder [examples](examples/example.py)
 
 ## Features
 
