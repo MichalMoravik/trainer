@@ -1,7 +1,7 @@
 import time
 import math
 
-from trainer import Trainer
+from trainer import Trainer, DummyTrainer
 
 
 def main():
@@ -9,6 +9,7 @@ def main():
     total_with_start_measuring()
     using_contexts()
     full_package_badass_trainer()
+    dummy_trainer()
 
 
 def useless_but_cool_oneliner():
@@ -54,6 +55,15 @@ def full_package_badass_trainer():
 
     metrics = badass_trainer.add_total('03.07.2022').metrics
     print('\nfull_package_badass_trainer:\n', metrics)
+
+
+def dummy_trainer():
+    CONFIG_VAR = False
+    trainer = Trainer() if CONFIG_VAR else DummyTrainer()
+
+    m = trainer.round(4).start_measuring().add_total('t').metrics
+    print('\ndummy_trainer:\n', m)
+
 
 
 if __name__ == '__main__':
