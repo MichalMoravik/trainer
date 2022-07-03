@@ -65,6 +65,19 @@ start, but it is possible to prematurely start measurement by calling
 - all epoch timestamps can be rounded to full seconds (making them
 integers instead of floats) by executing `trainer.round()` or `trainer.round(0)`
 
+### Turning off Trainer
+
+- to turn off trainer, the DummyTrainer class is provided. This class can be
+switched on, for example, based on a value of an environment variable
+
+```Python
+    trainer = Trainer() if ENV_VAR else DummyTrainer()
+```
+
+- calling `.metrics` at the end will always return in an empty dictionary which
+is falsy in Python. Your following code that uses the `metrics` dictionary can
+first do a check for this falsy value
+
 </br>
 
 [go to examples](https://github.com/MichalMoravik/trainer/blob/4bace6cdcdead86ab7d5574c5fe0e73159b6e2e6/examples/example.py)
