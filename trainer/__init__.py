@@ -1,3 +1,3 @@
-from .trainer import Trainer
-from .dummy import DummyTrainer
+from .real_trainer import Trainer
+from .dummy_trainer import DummyTrainer
 

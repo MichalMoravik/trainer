@@ -1,4 +1,7 @@
 class DummyTrainer:
+    def __init__(self):
+        self.metrics = {}
+
     def __enter__(self):
         pass
 
