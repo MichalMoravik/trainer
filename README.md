@@ -1,10 +1,20 @@
 # Trainer ⏱
 
+[![PyPI](https://img.shields.io/pypi/v/trainer-py?color=green)](https://pypi.org/project/trainer-py)
+
 Lightweight benchmarking package with zero dependencies
+
+## Installation
+
+```sh
+pip install trainer-py
+```
 
 ## Usage
 
 ```Python
+from trainer import Trainer
+
 t = Trainer().round(2)
 
 with t('metric1'):
@@ -27,7 +37,8 @@ print(m)
 }
 ```
 
-> for more examples, see folder [examples](examples/example.py)
+> for more, see
+[examples](https://github.com/MichalMoravik/trainer/blob/4bace6cdcdead86ab7d5574c5fe0e73159b6e2e6/examples/example.py)
 
 ## Features
 
@@ -56,4 +67,4 @@ integers instead of floats) by executing `trainer.round()` or `trainer.round(0)`
 
 </br>
 
-[go to examples](examples/example.py)
+[go to examples](https://github.com/MichalMoravik/trainer/blob/4bace6cdcdead86ab7d5574c5fe0e73159b6e2e6/examples/example.py)
