@@ -78,6 +78,8 @@ switched on, for example, based on a value of an environment variable
 is falsy in Python. Your following code that uses the `metrics` dictionary can
 first do a check for this falsy value
 
-</br>
+## More Info
 
-[go to examples](https://github.com/MichalMoravik/trainer/blob/4bace6cdcdead86ab7d5574c5fe0e73159b6e2e6/examples/example.py)
+[Go to examples](https://github.com/MichalMoravik/trainer/blob/4bace6cdcdead86ab7d5574c5fe0e73159b6e2e6/examples/example.py)
+
+[See an article on Dev.to](https://dev.to/michalmoravik/code-benchmarking-in-python-using-trainer-1553)
